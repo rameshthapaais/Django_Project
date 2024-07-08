@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chatrooms',
-    'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 
 ]
@@ -144,6 +144,16 @@ CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_METHODS = ['GET','POST','PATCH','DELETE','OPTIONS','PUT',]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        ],
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 # CORS_ALLOWED_ORIGINS = [
 
