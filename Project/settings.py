@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -144,14 +145,14 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_METHODS = ['GET','POST','PATCH','DELETE','OPTIONS','PUT',]
 
-CORS_ALLOWED_ORIGINS = [
+# CORS_ALLOWED_ORIGINS = [
 
-    'http://localhost:3000',
+#     'http://localhost:3000',
 
-] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+# ] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
 
-CORS_ALLOWED_ORIGIN_REGEXES = [
+# CORS_ALLOWED_ORIGIN_REGEXES = [
 
-    'http://localhost:3000',
+#     'http://localhost:3000','https://*.vercel.app'
 
-]
+# ]
