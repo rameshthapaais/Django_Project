@@ -1,9 +1,11 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from .models import ChatRoom
 from .serializers import ChatRoomSerializer
 from django.urls import reverse
+from django.contrib.auth.models import User
 from .views import sumNumbers
 
 
@@ -11,11 +13,14 @@ class ChatRoomViewSetTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up data for the whole TestCase
+        cls.user = User.objects.create_user(username='testuser', password='testpassword')
         cls.chatroom1 = ChatRoom.objects.create(name='Test Room 1')
         cls.chatroom2 = ChatRoom.objects.create(name='Test Room 2')
+        cls.token, created = Token.objects.get_or_create(user=cls.user)
 
     def setUp(self):
         self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
     def test_list_chatrooms(self):
         response = self.client.get(reverse('chatroom-list'))
@@ -75,8 +80,15 @@ class SumNumbersFunctionTest(TestCase):
 
 
 class SumNumbersViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up data for the whole TestCase
+        cls.user = User.objects.create_user(username='testuser', password='testpassword')
+        cls.token, created = Token.objects.get_or_create(user=cls.user)
+
     def setUp(self):
         self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         self.url = reverse('sum_num')
 
     def test_sum_numbers(self):
