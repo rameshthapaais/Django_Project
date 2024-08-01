@@ -13,10 +13,10 @@ class ChatRoomSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), write_only=True)
-   
+    chatroom_name = serializers.CharField(source='chat_romm.name', read_only=True)
     class Meta:
         model = Message
-        fields = ['id','chat_romm','username','text','user']
+        fields = ['id','chat_romm','username','text','user','chatroom_name']
     
     
 class RegisterSerializer(serializers.ModelSerializer):
