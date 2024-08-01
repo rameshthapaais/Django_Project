@@ -11,10 +11,14 @@ class ChatRoomSerializer(serializers.ModelSerializer):
         fields = ['id','name']
 
 class MessageSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), write_only=True)
+   
     class Meta:
         model = Message
-        fields = ['id','chat_romm','user','text']
-
+        fields = ['id','chat_romm','username','text','user']
+    
+    
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
             required=True,
